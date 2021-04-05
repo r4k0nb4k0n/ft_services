@@ -43,3 +43,41 @@ if [[ "$?" != "0" ]]; then
 	echo "$(tput setaf 7; tput setab 1; tput bold)Minikube is unavailable.$(tput sgr 0)\n"
 	exit $?
 fi
+
+# Run minikube.
+echo "\n$(tput setaf 7; tput setab 4; tput bold)___Run minikube start.___$(tput sgr 0)"
+minikube start
+if [[ "$?" != "0" ]]; then
+	echo "$(tput setaf 7; tput setab 1; tput bold)Can't 'minikube start'. Is Docker running?$(tput sgr 0)\n"
+	exit $?
+fi
+
+# Install metallb.
+
+echo "\n$(tput setaf 7; tput setab 4; tput bold)___Install metallb.___$(tput sgr 0)"
+minikube addons enable metallb
+kubectl apply -f ./srcs/metallb/manifests/configmap.yaml
+#kubectl apply -f ./srcs/metallb/manifests/namespace.yaml
+#kubectl apply -f ./srcs/metallb/manifests/metallb.yaml
+#kubectl delete secret -n metallb-system memberlist
+#kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
+#kubectl delete configmap -n metallb-system config
+#MINIKUBE_IP=$(minikube ip)
+#sed "s/MINIKUBE_IP/$MINIKUBE_IP/g" ./srcs/metallb/manifests/configmap.yaml > ./configmap_sed.yaml
+#kubectl create -f ./configmap_sed.yaml
+#rm -f ./configmap_sed.yaml
+
+# Link minikube to local docker.
+
+echo "\n$(tput setaf 7; tput setab 4; tput bold)___Link minikube to local docker.___$(tput sgr 0)"
+eval $(minikube docker-env)
+
+# Build nginx image and run.
+
+
+
+# Enable dashboard, metrics-server.
+
+echo "\n$(tput setaf 7; tput setab 4; tput bold)___Enable dashboard, metrics-server.___$(tput sgr 0)"
+minikube addons enable dashboard
+minikube addons enable metrics-server
