@@ -1,0 +1,62 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    manifest.yaml                                      :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/04/06 13:50:44 by hyechoi           #+#    #+#              #
+#    Updated: 2021/04/06 16:44:03 by hyechoi          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ft-nginx
+  labels:
+    run: ft-nginx
+  annotations:
+    metallb.universe.tf/allow-shared-ip: shared
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    targetPort: 443
+    protocol: TCP
+    name: https
+  selector:
+    run: ft-nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ft-nginx
+spec:
+  selector:
+    matchLabels:
+      run: ft-nginx
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: ft-nginx
+    spec:
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: nginxsecret
+      - name: configmap-volume
+        configMap:
+          name: nginxconfigmap
+      containers:
+      - name: ft-nginx
+        image: alpine:ft-nginx
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 443
+        - containerPort: 80
