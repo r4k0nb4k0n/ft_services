@@ -1,0 +1,57 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    manifest.yaml                                      :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/04/06 13:50:44 by hyechoi           #+#    #+#              #
+#    Updated: 2021/04/07 18:33:20 by hyechoi          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ft-phpmyadmin
+  labels:
+    run: ft-phpmyadmin
+  annotations:
+    metallb.universe.tf/allow-shared-ip: shared
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5000
+    targetPort: 5000
+    protocol: TCP
+    name: https
+  selector:
+    run: ft-phpmyadmin
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ft-phpmyadmin
+spec:
+  selector:
+    matchLabels:
+      run: ft-phpmyadmin
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: ft-phpmyadmin
+    spec:
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: nginxsecret
+      - name: configmap-volume
+        configMap:
+          name: nginxconfigmap
+      containers:
+      - name: ft-phpmyadmin
+        image: alpine:ft-phpmyadmin
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
