@@ -6,7 +6,7 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 13:50:44 by hyechoi           #+#    #+#              #
-#    Updated: 2021/04/07 18:33:20 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/04/27 18:42:38 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ kind: Service
 metadata:
   name: ft-phpmyadmin
   labels:
-    run: ft-phpmyadmin
+    app: ft-phpmyadmin
   annotations:
     metallb.universe.tf/allow-shared-ip: shared
 spec:
@@ -26,7 +26,7 @@ spec:
     protocol: TCP
     name: https
   selector:
-    run: ft-phpmyadmin
+    app: ft-phpmyadmin
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -35,12 +35,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      run: ft-phpmyadmin
+      app: ft-phpmyadmin
   replicas: 1
   template:
     metadata:
       labels:
-        run: ft-phpmyadmin
+        app: ft-phpmyadmin
     spec:
       volumes:
       - name: secret-volume
