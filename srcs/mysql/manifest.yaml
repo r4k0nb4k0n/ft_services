@@ -6,7 +6,7 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 13:50:44 by hyechoi           #+#    #+#              #
-#    Updated: 2021/04/27 17:17:56 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/04/28 16:17:05 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ metadata:
   name: ft-mysql-root-pass
 type: Opaque
 data:
-  password: dDNzdDFzYjN0dDNydGg0bnRoMW5rCg==
+  password: dDNzdDFzYjN0dDNydGg0bnRoMW5r
 ---
 apiVersion: v1
 kind: Secret
@@ -24,7 +24,7 @@ metadata:
   name: ft-mysql-wordpressuser-pass
 type: Opaque
 data:
-  password: dDNzdDFzZzAwZAo=
+  password: dDNzdDFzZzAwZA==
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -88,16 +88,16 @@ spec:
       - image: alpine:ft-mysql
         name: ft-mysql
         env:
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: ft-mysql-root-pass
-              key: password
-        - name: MYSQL_WORDPRESSUSER_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: ft-mysql-wordpressuser-pass
-              key: password
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ft-mysql-root-pass
+                key: password
+          - name: MYSQL_WORDPRESSUSER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ft-mysql-wordpressuser-pass
+                key: password
         ports:
         - containerPort: 3306
           name: ft-mysql
