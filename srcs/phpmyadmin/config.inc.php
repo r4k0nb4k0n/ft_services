@@ -68,6 +68,12 @@ $cfg['Servers'][$i]['AllowNoPassword'] = false;
  */
 
 /**
+ * phpMyAdmin is able to cache templates with this configuration.
+ */
+
+$cfg['TempDir'] = '/tmp/pma_cache/';
+
+/**
  * Directories for saving/loading files from server
  */
 $cfg['UploadDir'] = '';
