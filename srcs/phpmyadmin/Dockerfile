@@ -21,7 +21,6 @@ WORKDIR /app
 COPY init.sh /tmp/init.sh
 COPY ssl/ /etc/nginx/ssl/
 COPY conf/conf.d/ /etc/nginx/conf.d/
-COPY conf/http.d/ /etc/nginx/http.d/
 COPY phpMyAdmin.zip /tmp/
 RUN apk add nginx --repository=https://mirrors.ustc.edu.cn/alpine/v3.12/community/
 RUN unzip /tmp/phpMyAdmin.zip -d /var/www/
