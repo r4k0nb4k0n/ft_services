@@ -40,8 +40,14 @@ if ( $lastexitcode -ne 0 ){
 	exit $?
 }
 
+# minikube delete before minikube start.
+minikube delete
+minikube delete --all
+
 # Run minikube.
 echo "\n___Run minikube start with Hyper-V vm driver.___"
+minikube config set memory 2000 
+minikube config set disk-size 4000
 minikube start --wait=false --vm-driver=hyperv
 if ( $lastexitcode -ne 0 ){
 	echo "Can't 'minikube start'.\n"
@@ -52,8 +58,7 @@ if ( $lastexitcode -ne 0 ){
 
 echo "\n___Install metallb.___"
 minikube addons enable metallb
-Set-Variable -name "MINIKUBE_IP" -value $(minikube ip;)
-#MINIKUBE_IP=$(minikube ip)
+$MINIKUBE_IP=minikube ip
 sed "s/MINIKUBE_IP/$MINIKUBE_IP/g" ./srcs/metallb/manifests/configmap.yaml > ./configmap_sed.yaml
 kubectl apply -f ./configmap_sed.yaml
 rm -Force ./configmap_sed.yaml
@@ -73,7 +78,7 @@ echo "\n___Link minikube to local docker.___"
 
 echo "\n___Build container images in need.___"
 echo "___Build ft-nginx.___"
-docker build ./srcs/nginx/ -t alpine:ft-nginx
+docker build ./srcs/nginx/ -t alpine:ft-nginx --build-arg minikube_ip=$MINIKUBE_IP
 echo "___Build ft-mysql.___"
 docker build ./srcs/mysql/ -t alpine:ft-mysql
 echo "___Build ft-phpmyadmin.___"
@@ -82,6 +87,7 @@ docker build ./srcs/phpmyadmin/ -t alpine:ft-phpmyadmin
 # Apply container images to kube.
  
 echo "\n___Apply container images to kube.___"
+kubectl apply -f ./srcs/secrets.yaml
 kubectl apply -f ./srcs/nginx/manifest.yaml
 kubectl apply -f ./srcs/mysql/manifest.yaml
 kubectl apply -f ./srcs/phpmyadmin/manifest.yaml

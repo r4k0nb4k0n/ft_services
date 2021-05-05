@@ -11,18 +11,28 @@
 # **************************************************************************** #
 
 # The containers have to be build using Alpine Linux.
-#FROM alpine:latest
+# Use specific tag - alpine:3.12 to get stable.
 FROM alpine:3.12
-
-# Specify the author.
 MAINTAINER hyechoi@student.42seoul.kr
+# Define ARG and ENV in need.
+ARG minikube_ip
+ENV MINIKUBE_IP=${minikube_ip}
 
+# Install nginx and openssl.
+# openssl is needed for generating SSL private key and certificate.
+RUN apk add nginx openssl --repository=https://mirrors.ustc.edu.cn/alpine/v3.12/community/
+
+COPY . /app
 WORKDIR /app
-COPY init.sh /tmp/init.sh
-COPY ssl/ /etc/nginx/ssl/
-COPY conf/conf.d/ /etc/nginx/conf.d/
-COPY html/ /var/www/html/
-#RUN apk add nginx --repository=https://mirrors.ustc.edu.cn/alpine/latest-stable/community/
-RUN apk add nginx --repository=https://mirrors.ustc.edu.cn/alpine/v3.12/community/
+
+# Generate SSL private key and certificate with CN=$MINIKUBE_IP.
+RUN gen_ssl.sh
+
+# Copy nginx configuration file.
+RUN cp -R /app/conf/conf.d/ /etc/nginx/conf.d/
+# Copy contents for serving.
+RUN cp -R /app/html/ /var/www/html/
+# Expose port for HTTP and HTTPS.
 EXPOSE 80 443
-CMD /tmp/init.sh
+
+ENTRYPOINT init.sh
