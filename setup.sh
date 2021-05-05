@@ -61,7 +61,9 @@ minikube delete --all
 # Run minikube.
 echo "\n$(tput setaf 7; tput setab 4; tput bold)___Run minikube start with VirtualBox vm driver.___$(tput sgr 0)"
 export MINIKUBE_HOME=~/goinfre
+echo "\n$(tput setaf 7; tput setab 2; tput bold)___Set minikube config memory.___$(tput sgr 0)"
 minikube config set memory 4000
+echo "\n$(tput setaf 7; tput setab 2; tput bold)___Set minikube config disk-size.___$(tput sgr 0)"
 minikube config set disk-size 4000
 minikube start --wait=false --vm-driver=virtualbox
 if [[ "$?" != "0" ]]; then
@@ -77,12 +79,6 @@ MINIKUBE_IP=$(minikube ip)
 sed "s/MINIKUBE_IP/$MINIKUBE_IP/g" ./srcs/metallb/manifests/configmap.yaml > ./configmap_sed.yaml
 kubectl apply -f ./configmap_sed.yaml
 rm -f ./configmap_sed.yaml
-#kubectl apply -f ./srcs/metallb/manifests/configmap.yaml
-#kubectl apply -f ./srcs/metallb/manifests/namespace.yaml
-#kubectl apply -f ./srcs/metallb/manifests/metallb.yaml
-#kubectl delete secret -n metallb-system memberlist
-#kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
-#kubectl delete configmap -n metallb-system config
 
 # Link minikube to local docker.
 
@@ -93,7 +89,7 @@ eval $(minikube docker-env)
 
 echo "\n$(tput setaf 7; tput setab 4; tput bold)___Build container images in need.___$(tput sgr 0)"
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-nginx.___$(tput sgr 0)"
-docker build ./srcs/nginx/ -t alpine:ft-nginx
+docker build ./srcs/nginx/ -t alpine:ft-nginx --build-arg minikube_ip=$MINIKUBE_IP
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-mysql.___$(tput sgr 0)"
 docker build ./srcs/mysql/ -t alpine:ft-mysql
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-phpmyadmin.___$(tput sgr 0)"
