@@ -6,7 +6,7 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/05 17:45:21 by hyechoi           #+#    #+#              #
-#    Updated: 2021/05/06 08:21:08 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/05/06 08:30:48 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ COPY . /app
 WORKDIR /app
 
 # Generate SSL private key and certificate with CN=$MINIKUBE_IP.
-RUN gen_ssl.sh
+RUN /bin/sh gen_ssl.sh
 
 # Copy nginx configuration file.
 RUN cp -R conf/conf.d/ /etc/nginx/conf.d/
@@ -35,4 +35,4 @@ RUN cp -R html/ /var/www/html/
 # Expose port for HTTP and HTTPS.
 EXPOSE 80 443
 
-ENTRYPOINT init.sh
+ENTRYPOINT /bin/sh init.sh
