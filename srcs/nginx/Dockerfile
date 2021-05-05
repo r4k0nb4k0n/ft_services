@@ -22,17 +22,18 @@ ENV MINIKUBE_IP=${minikube_ip}
 # openssl is needed for generating SSL private key and certificate.
 RUN apk add nginx openssl --repository=https://mirrors.ustc.edu.cn/alpine/v3.12/community/
 
-COPY . /app
 WORKDIR /app
 
 # Generate SSL private key and certificate with CN=$MINIKUBE_IP.
+COPY gen_ssl.sh gen_ssl.sh
 RUN /bin/sh gen_ssl.sh
 
 # Copy nginx configuration file.
-RUN cp -R conf/conf.d/ /etc/nginx/conf.d/
+COPY conf/conf.d/ /etc/nginx/conf.d/
 # Copy contents for serving.
-RUN cp -R html/ /var/www/html/
+COPY html/ /var/www/html/
 # Expose port for HTTP and HTTPS.
 EXPOSE 80 443
 
+COPY init.sh init.sh
 ENTRYPOINT /bin/sh init.sh
