@@ -55,6 +55,7 @@ fi
 
 # minikube delte before minikube start.
 echo "\n$(tput setaf 7; tput setab 4; tput bold)___Delete minikube setup before start.___$(tput sgr 0)"
+minikube delete
 minikube delete --all
 
 # Run minikube.
