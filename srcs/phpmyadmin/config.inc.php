@@ -15,6 +15,8 @@ declare(strict_types=1);
  */
 $cfg['blowfish_secret'] = 'testisgoodtestisgoodtestisgood!@'; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */
 
+//$cfg['PmaAbsoluteUri'] = '/phpmyadmin';
+
 /**
  * Servers configuration
  */

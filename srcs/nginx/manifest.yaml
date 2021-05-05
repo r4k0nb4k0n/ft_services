@@ -6,7 +6,7 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 13:50:44 by hyechoi           #+#    #+#              #
-#    Updated: 2021/04/06 16:44:03 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/05/05 20:01:51 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,6 @@ spec:
       containers:
       - name: ft-nginx
         image: alpine:ft-nginx
-        imagePullPolicy: Never
         ports:
         - containerPort: 443
         - containerPort: 80

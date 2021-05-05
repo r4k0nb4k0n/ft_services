@@ -6,26 +6,10 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 13:50:44 by hyechoi           #+#    #+#              #
-#    Updated: 2021/04/28 16:17:05 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/05/05 20:01:41 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-apiVersion: v1
-kind: Secret
-metadata:
-  name: ft-mysql-root-pass
-type: Opaque
-data:
-  password: dDNzdDFzYjN0dDNydGg0bnRoMW5r
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: ft-mysql-wordpressuser-pass
-type: Opaque
-data:
-  password: dDNzdDFzZzAwZA==
----
 apiVersion: v1
 kind: PersistentVolume
 metadata:

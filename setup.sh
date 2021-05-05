@@ -53,8 +53,15 @@ if [[ "$?" != "0" ]]; then
 	exit $?
 fi
 
+# minikube delte before minikube start.
+echo "\n$(tput setaf 7; tput setab 4; tput bold)___Delete minikube setup before start.___$(tput sgr 0)"
+minikube delete --all
+
 # Run minikube.
 echo "\n$(tput setaf 7; tput setab 4; tput bold)___Run minikube start with VirtualBox vm driver.___$(tput sgr 0)"
+export MINIKUBE_HOME=~/goinfre
+minikube config set memory 4000
+minikube config set disk-size 4000
 minikube start --wait=false --vm-driver=virtualbox
 if [[ "$?" != "0" ]]; then
 	echo "$(tput setaf 7; tput setab 1; tput bold)Can't 'minikube start'.$(tput sgr 0)\n"
@@ -94,6 +101,7 @@ docker build ./srcs/phpmyadmin/ -t alpine:ft-phpmyadmin
 # Apply container images to kube.
  
 echo "\n$(tput setaf 7; tput setab 4; tput bold)___Apply container images to kube.___$(tput sgr 0)"
+kubectl apply -f ./srcs/secrets.yaml
 kubectl apply -f ./srcs/nginx/manifest.yaml
 kubectl apply -f ./srcs/mysql/manifest.yaml
 kubectl apply -f ./srcs/phpmyadmin/manifest.yaml
