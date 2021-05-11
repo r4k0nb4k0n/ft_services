@@ -1,0 +1,63 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    manifest.yaml                                      :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/04/06 13:50:44 by hyechoi           #+#    #+#              #
+#    Updated: 2021/05/05 20:02:06 by hyechoi          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ft-wordpress
+  labels:
+    app: ft-wordpress
+  annotations:
+    metallb.universe.tf/allow-shared-ip: shared
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5050
+    targetPort: 5050
+    protocol: TCP
+    name: https
+  selector:
+    app: ft-wordpress
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ft-wordpress
+spec:
+  selector:
+    matchLabels:
+      app: ft-wordpress
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ft-wordpress
+    spec:
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: nginxsecret
+      - name: configmap-volume
+        configMap:
+          name: nginxconfigmap
+      containers:
+      - name: ft-wordpress
+        image: alpine:ft-wordpress
+        env:
+          - name: MYSQL_WORDPRESSUSER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ft-mysql-wordpressuser-pass
+                key: password
+        ports:
+        - containerPort: 5050
+          name: ft-wordpress

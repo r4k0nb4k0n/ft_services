@@ -83,6 +83,8 @@ echo "___Build ft-mysql.___"
 docker build ./srcs/mysql/ -t alpine:ft-mysql
 echo "___Build ft-phpmyadmin.___"
 docker build ./srcs/phpmyadmin/ -t alpine:ft-phpmyadmin
+echo "___Build ft-wordpress.___"
+docker build ./srcs/wordpress/ -t alpine:ft-wordpress
 
 # Apply container images to kube.
  
@@ -91,6 +93,7 @@ kubectl apply -f ./srcs/secrets.yaml
 kubectl apply -f ./srcs/nginx/manifest.yaml
 kubectl apply -f ./srcs/mysql/manifest.yaml
 kubectl apply -f ./srcs/phpmyadmin/manifest.yaml
+kubectl apply -f ./srcs/wordpress/manifest.yaml
 
 # Enable dashboard, metrics-server.
 
