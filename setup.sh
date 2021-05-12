@@ -95,7 +95,7 @@ docker build ./srcs/mysql/ -t alpine:ft-mysql
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-phpmyadmin.___$(tput sgr 0)"
 docker build ./srcs/phpmyadmin/ -t alpine:ft-phpmyadmin
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-wordpress.___$(tput sgr 0)"
-docker build ./srcs/phpmyadmin/ -t alpine:ft-wordpress
+docker build ./srcs/wordpress/ -t alpine:ft-wordpress
 
 # Apply container images to kube.
  
