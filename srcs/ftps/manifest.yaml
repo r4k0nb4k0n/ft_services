@@ -48,6 +48,10 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
+  - port: 20
+    targetPort: 20
+    protocol: TCP
+    name: ftp-data
   - port: 21
     targetPort: 21
     protocol: TCP
@@ -87,6 +91,8 @@ spec:
                 name: ft-ftps-ftpuser-pass
                 key: password
         ports:
+        - containerPort: 20
+          name: ftp-data
         - containerPort: 21
           name: ftp
         - containerPort: 30020

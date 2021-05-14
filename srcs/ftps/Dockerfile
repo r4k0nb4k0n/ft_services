@@ -29,14 +29,15 @@ COPY gen_ssl.sh gen_ssl.sh
 RUN /bin/sh gen_ssl.sh
 
 # Set up configuration file.
-COPY vsftpd.conf /etc/vsftpd/vsftpd.conf
+COPY vsftpd.conf /etc/vsftpd.conf
+RUN echo "pasv_address=${MINIKUBE_IP}" >> /etc/vsftpd.conf
 
 # Add ftpuser and set password.
 COPY ftpuser.sh ftpuser.sh
 RUN /bin/sh ftpuser.sh
 
 # Expose port for FTP ports.
-EXPOSE 21 30020 30021
+EXPOSE 20 21 30020 30021
 
 COPY init.sh init.sh
 ENTRYPOINT /bin/sh init.sh
