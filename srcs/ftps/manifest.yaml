@@ -1,0 +1,102 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    manifest.yaml                                      :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/05/12 15:02:46 by hyechoi           #+#    #+#              #
+#    Updated: 2021/05/14 22:13:18 by hyechoi          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ft-ftps-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/ftps"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ft-ftps-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ft-ftps
+  labels:
+    run: ft-ftps
+  annotations:
+    metallb.universe.tf/allow-shared-ip: shared
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 21
+    targetPort: 21
+    protocol: TCP
+    name: ftp
+  - port: 30020
+    targetPort: 30020
+    protocol: TCP
+    name: ftp-pasv-min
+  - port: 30021
+    targetPort: 30021
+    protocol: TCP
+    name: ftp-pasv-max
+  selector:
+    run: ft-ftps
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ft-ftps
+spec:
+  selector:
+    matchLabels:
+      run: ft-ftps
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: ft-ftps
+    spec:
+      containers:
+      - name: ft-ftps
+        image: alpine:ft-ftps
+        env:
+          - name: FTPS_FTPUSER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ft-ftps-ftpuser-pass
+                key: password
+        ports:
+        - containerPort: 21
+          name: ftp
+        - containerPort: 30020
+          name: ftp-pasv-min
+        - containerPort: 30021
+          name: ftp-pasv-max
+        volumeMounts:
+        - name: ft-ftps-pv-volume
+          mountPath: /home/ftps
+      volumes:
+      - name: ft-ftps-pv-volume
+        persistentVolumeClaim:
+          claimName: ft-ftps-pv-claim

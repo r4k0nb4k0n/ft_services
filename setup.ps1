@@ -62,12 +62,6 @@ $MINIKUBE_IP=minikube ip
 sed "s/MINIKUBE_IP/$MINIKUBE_IP/g" ./srcs/metallb/manifests/configmap.yaml > ./configmap_sed.yaml
 kubectl apply -f ./configmap_sed.yaml
 rm -Force ./configmap_sed.yaml
-#kubectl apply -f ./srcs/metallb/manifests/configmap.yaml
-#kubectl apply -f ./srcs/metallb/manifests/namespace.yaml
-#kubectl apply -f ./srcs/metallb/manifests/metallb.yaml
-#kubectl delete secret -n metallb-system memberlist
-#kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
-#kubectl delete con}gmap -n metallb-system config
 
 # Link minikube to local docker.
 
@@ -85,6 +79,8 @@ echo "___Build ft-phpmyadmin.___"
 docker build ./srcs/phpmyadmin/ -t alpine:ft-phpmyadmin
 echo "___Build ft-wordpress.___"
 docker build ./srcs/wordpress/ -t alpine:ft-wordpress
+echo "___Build ft-ftps.___"
+docker build ./srcs/ftps/ -t alpine:ft-ftps
 
 # Apply container images to kube.
  
@@ -94,6 +90,7 @@ kubectl apply -f ./srcs/nginx/manifest.yaml
 kubectl apply -f ./srcs/mysql/manifest.yaml
 kubectl apply -f ./srcs/phpmyadmin/manifest.yaml
 kubectl apply -f ./srcs/wordpress/manifest.yaml
+kubectl apply -f ./srcs/ftps/manifest.yaml
 
 # Enable dashboard, metrics-server.
 

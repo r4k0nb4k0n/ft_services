@@ -96,6 +96,8 @@ echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-phpmyadmin.___$(tput s
 docker build ./srcs/phpmyadmin/ -t alpine:ft-phpmyadmin
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-wordpress.___$(tput sgr 0)"
 docker build ./srcs/wordpress/ -t alpine:ft-wordpress
+echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-ftps.___$(tput sgr 0)"
+docker build ./srcs/ftps/ -t alpine:ft-ftps --build-arg minikube_ip=$MINIKUBE_IP
 
 # Apply container images to kube.
  
@@ -105,6 +107,7 @@ kubectl apply -f ./srcs/nginx/manifest.yaml
 kubectl apply -f ./srcs/mysql/manifest.yaml
 kubectl apply -f ./srcs/phpmyadmin/manifest.yaml
 kubectl apply -f ./srcs/wordpress/manifest.yaml
+kubectl apply -f ./srcs/ftps/manifest.yaml
 
 # Enable dashboard, metrics-server.
 
