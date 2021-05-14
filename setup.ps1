@@ -80,7 +80,7 @@ docker build ./srcs/phpmyadmin/ -t alpine:ft-phpmyadmin
 echo "___Build ft-wordpress.___"
 docker build ./srcs/wordpress/ -t alpine:ft-wordpress
 echo "___Build ft-ftps.___"
-docker build ./srcs/ftps/ -t alpine:ft-ftps
+docker build ./srcs/ftps/ -t alpine:ft-ftps --build-arg minikube_ip=$MINIKUBE_IP
 
 # Apply container images to kube.
  
