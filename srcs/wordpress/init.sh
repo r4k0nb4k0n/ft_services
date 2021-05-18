@@ -4,9 +4,17 @@ ls /var/www/wordpress/flag &>/dev/null
 if [ $? -eq 1 ]
 then
 	cd /var/www/wordpress
-	touch flag & sleep 3
+	touch flag
 	# Create wp-config.php
-	wp config create --dbhost=ft-mysql --dbname=wordpress --dbuser=wordpressuser --dbpass=$MYSQL_WORDPRESSUSER_PASSWORD --locale=ko_KR 
+	while [ 1 ]
+	do
+		wp config create --dbhost=ft-mysql --dbname=wordpress --dbuser=wordpressuser --dbpass=$MYSQL_WORDPRESSUSER_PASSWORD --locale=ko_KR
+		sleep 1
+		if [ $? -eq 0 ]
+		then
+			break
+		fi
+	done
 	# Create DB based on wp-config.php
 	wp db create
 	# Install core with given info
