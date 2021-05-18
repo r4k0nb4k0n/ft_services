@@ -6,7 +6,7 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/07 14:40:31 by hyechoi           #+#    #+#              #
-#    Updated: 2021/04/27 21:28:54 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/05/18 19:53:47 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,5 +28,6 @@ VOLUME [ "/var/lib/mysql" ]
 
 EXPOSE 3306
 
+COPY pma_create_tables.sql pma_create_tables.sql
 COPY init.sh init.sh
 ENTRYPOINT /bin/sh init.sh

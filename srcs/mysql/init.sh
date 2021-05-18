@@ -23,8 +23,11 @@ then
 	  CREATE USER 'wordpressuser'@'172.17.0.1' IDENTIFIED BY '$MYSQL_WORDPRESSUSER_PASSWORD';
 	  GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpressuser'@'localhost' IDENTIFIED BY '$MYSQL_WORDPRESSUSER_PASSWORD';
 	  GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpressuser'@'172.17.0.1' IDENTIFIED BY '$MYSQL_WORDPRESSUSER_PASSWORD';
+	  CREATE user 'pma'@'localhost' IDENTIFIED BY '$MYSQL_PMA_PASSWORD';
+	  CREATE user 'pma'@'172.17.0.1' IDENTIFIED BY '$MYSQL_PMA_PASSWORD';
 	  FLUSH PRIVILEGES;
 EOF
+	mysql --user=root -p$MYSQL_ROOT_PASSWORD < /app/pma_create_tables.sql
 fi
 
 tail -f /dev/null

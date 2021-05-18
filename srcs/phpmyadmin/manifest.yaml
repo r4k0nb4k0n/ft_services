@@ -6,7 +6,7 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 13:50:44 by hyechoi           #+#    #+#              #
-#    Updated: 2021/05/05 20:02:06 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/05/18 17:42:08 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,5 +52,11 @@ spec:
       containers:
       - name: ft-phpmyadmin
         image: alpine:ft-phpmyadmin
+        env:
+          - name: MYSQL_PMA_PASSWORD
+            valueFrom: 
+              secretKeyRef:
+                name: ft-mysql-pma-pass
+                key: password
         ports:
         - containerPort: 5000
