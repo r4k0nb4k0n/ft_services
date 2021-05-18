@@ -6,7 +6,7 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 13:50:44 by hyechoi           #+#    #+#              #
-#    Updated: 2021/05/05 20:02:06 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/05/18 17:13:35 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,76 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: ft-mysql-wordpressuser-pass
+                key: password
+          - name: FT_WORDPRESS_ADMIN_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: ft-wordpress-admin-pass
+                key: username
+          - name: FT_WORDPRESS_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ft-wordpress-admin-pass
+                key: password
+          - name: FT_WORDPRESS_USER_ALICE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: ft-wordpress-user-alice-pass
+                key: username
+          - name: FT_WORDPRESS_USER_ALICE_EMAIL
+            valueFrom:
+              secretKeyRef:
+                name: ft-wordpress-user-alice-pass
+                key: email
+          - name: FT_WORDPRESS_USER_ALICE_DISPLAY_NAME
+            valueFrom:
+              secretKeyRef:
+                name: ft-wordpress-user-alice-pass
+                key: display_name
+          - name: FT_WORDPRESS_USER_ALICE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ft-wordpress-user-alice-pass
+                key: password
+          - name: FT_WORDPRESS_USER_BOB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: ft-wordpress-user-bob-pass
+                key: username
+          - name: FT_WORDPRESS_USER_BOB_EMAIL
+            valueFrom:
+              secretKeyRef:
+                name: ft-wordpress-user-bob-pass
+                key: email
+          - name: FT_WORDPRESS_USER_BOB_DISPLAY_NAME
+            valueFrom:
+              secretKeyRef:
+                name: ft-wordpress-user-bob-pass
+                key: display_name
+          - name: FT_WORDPRESS_USER_BOB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ft-wordpress-user-bob-pass
+                key: password
+          - name: FT_WORDPRESS_USER_MARY_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: ft-wordpress-user-mary-pass
+                key: username
+          - name: FT_WORDPRESS_USER_MARY_EMAIL
+            valueFrom:
+              secretKeyRef:
+                name: ft-wordpress-user-mary-pass
+                key: email
+          - name: FT_WORDPRESS_USER_MARY_DISPLAY_NAME
+            valueFrom:
+              secretKeyRef:
+                name: ft-wordpress-user-mary-pass
+                key: display_name
+          - name: FT_WORDPRESS_USER_MARY_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ft-wordpress-user-mary-pass
                 key: password
         ports:
         - containerPort: 5050
