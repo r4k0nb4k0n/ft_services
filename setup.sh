@@ -62,9 +62,9 @@ minikube delete --all
 echo "\n$(tput setaf 7; tput setab 4; tput bold)___Run minikube start with VirtualBox vm driver.___$(tput sgr 0)"
 export MINIKUBE_HOME=~/goinfre
 echo "\n$(tput setaf 7; tput setab 2; tput bold)___Set minikube config memory.___$(tput sgr 0)"
-minikube config set memory 4000
+minikube config set memory 4096
 echo "\n$(tput setaf 7; tput setab 2; tput bold)___Set minikube config disk-size.___$(tput sgr 0)"
-minikube config set disk-size 4000
+minikube config set disk-size 6120
 minikube start --wait=false --vm-driver=virtualbox
 if [[ "$?" != "0" ]]; then
 	echo "$(tput setaf 7; tput setab 1; tput bold)Can't 'minikube start'.$(tput sgr 0)\n"
@@ -88,6 +88,8 @@ eval $(minikube docker-env)
 # Build container images in need.
 
 echo "\n$(tput setaf 7; tput setab 4; tput bold)___Build container images in need.___$(tput sgr 0)"
+echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-influxdb.___$(tput sgr 0)"
+docker build ./srcs/influxdb/ -t alpine:ft-influxdb --build-arg minikube_ip=$MINIKUBE_IP
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-nginx.___$(tput sgr 0)"
 docker build ./srcs/nginx/ -t alpine:ft-nginx --build-arg minikube_ip=$MINIKUBE_IP
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-mysql.___$(tput sgr 0)"
@@ -103,6 +105,7 @@ docker build ./srcs/ftps/ -t alpine:ft-ftps --build-arg minikube_ip=$MINIKUBE_IP
  
 echo "\n$(tput setaf 7; tput setab 4; tput bold)___Apply container images to kube.___$(tput sgr 0)"
 kubectl apply -f ./srcs/secrets.yaml
+kubectl apply -f ./srcs/influxdb/manifest.yaml
 kubectl apply -f ./srcs/mysql/manifest.yaml
 kubectl apply -f ./srcs/nginx/manifest.yaml
 kubectl apply -f ./srcs/phpmyadmin/manifest.yaml

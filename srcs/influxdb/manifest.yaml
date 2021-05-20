@@ -1,0 +1,204 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    manifest.yaml                                      :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/04/06 13:50:44 by hyechoi           #+#    #+#              #
+#    Updated: 2021/05/20 16:23:27 by hyechoi          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ft-influxdb-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/influxdb"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ft-influxdb-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ft-influxdb
+  labels:
+    app: ft-influxdb
+spec:
+  type: ClusterIP
+  ports:
+  - name: influxdb-db
+    protocol: TCP
+    port: 8086
+    targetPort: 8086
+  selector:
+    app: ft-influxdb
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ft-influxdb
+spec:
+  selector:
+    matchLabels:
+      app: ft-influxdb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ft-influxdb
+    spec:
+      containers:
+      - image: alpine:ft-influxdb
+        name: ft-influxdb
+        env:
+          - name: INFLUXDB_ROOT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-root-pass
+                key: password
+          - name: INFLUXDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-root-pass
+                key: password
+          - name: INFLUXDB_ROOT_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-root-pass
+                key: database
+          - name: INFLUXDB_FT_NGINX_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-nginx-pass
+                key: password
+          - name: INFLUXDB_FT_NGINX_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-nginx-pass
+                key: password
+          - name: INFLUXDB_FT_NGINX_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-nginx-pass
+                key: database
+          - name: INFLUXDB_FT_PHPMYADMIN_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-phpmyadmin-pass
+                key: password
+          - name: INFLUXDB_FT_PHPMYADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-phpmyadmin-pass
+                key: password
+          - name: INFLUXDB_FT_PHPMYADMIN_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-phpmyadmin-pass
+                key: database
+          - name: INFLUXDB_FT_WORDPRESS_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-wordpress-pass
+                key: password
+          - name: INFLUXDB_FT_WORDPRESS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-wordpress-pass
+                key: password
+          - name: INFLUXDB_FT_WORDPRESS_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-wordpress-pass
+                key: database
+          - name: INFLUXDB_FT_MYSQL_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-mysql-pass
+                key: password
+          - name: INFLUXDB_FT_MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-mysql-pass
+                key: password
+          - name: INFLUXDB_FT_MYSQL_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-mysql-pass
+                key: database
+          - name: INFLUXDB_FT_FTPS_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-ftps-pass
+                key: password
+          - name: INFLUXDB_FT_FTPS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-ftps-pass
+                key: password
+          - name: INFLUXDB_FT_FTPS_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-ftps-pass
+                key: database
+          - name: INFLUXDB_FT_GRAFANA_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-grafana-pass
+                key: password
+          - name: INFLUXDB_FT_GRAFANA_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-grafana-pass
+                key: password
+          - name: INFLUXDB_FT_GRAFANA_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-grafana-pass
+                key: database
+          - name: INFLUXDB_FT_INFLUXDB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-influxdb-pass
+                key: password
+          - name: INFLUXDB_FT_INFLUXDB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-influxdb-pass
+                key: password
+          - name: INFLUXDB_FT_INFLUXDB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-influxdb-pass
+                key: database
+        ports:
+        - containerPort: 8086
+          name: ft-influxdb
+        volumeMounts:
+        - name: ft-influxdb-pv-volume
+          mountPath: /var/lib/influxdb
+      volumes:
+      - name: ft-influxdb-pv-volume
+        persistentVolumeClaim:
+          claimName: ft-influxdb-pv-claim
