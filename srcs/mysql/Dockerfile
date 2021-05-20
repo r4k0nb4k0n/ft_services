@@ -6,7 +6,7 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/07 14:40:31 by hyechoi           #+#    #+#              #
-#    Updated: 2021/05/18 19:53:47 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/05/20 13:32:35 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ ENV MINIKUBE_IP=${minikube_ip}
 
 WORKDIR /app
 
-RUN apk add mysql mysql-client --repository=https://mirrors.ustc.edu.cn/alpine/v3.12/community/
+RUN apk add mysql mysql-client
 COPY mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
 
 # Create the persistent volume.

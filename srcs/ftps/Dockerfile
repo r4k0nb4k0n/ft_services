@@ -6,7 +6,7 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/12 14:40:56 by hyechoi           #+#    #+#              #
-#    Updated: 2021/05/14 22:30:10 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/05/20 13:32:14 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ ENV MINIKUBE_IP=${minikube_ip}
 
 # Install nginx and openssl.
 # openssl is needed for generating SSL private key and certificate.
-RUN apk add vsftpd openssl --repository=https://mirrors.ustc.edu.cn/alpine/v3.12/community/
+RUN apk add vsftpd openssl
 
 WORKDIR /app
 
