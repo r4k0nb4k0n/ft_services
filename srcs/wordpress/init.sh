@@ -9,11 +9,11 @@ then
 	while [ 1 ]
 	do
 		wp config create --dbhost=ft-mysql --dbname=wordpress --dbuser=wordpressuser --dbpass=$MYSQL_WORDPRESSUSER_PASSWORD --locale=ko_KR
-		sleep 1
 		if [ $? -eq 0 ]
 		then
 			break
 		fi
+		sleep 1
 	done
 	# Create DB based on wp-config.php
 	wp db create
