@@ -6,7 +6,7 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 13:50:44 by hyechoi           #+#    #+#              #
-#    Updated: 2021/05/20 16:23:27 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/05/21 21:27:39 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: ft-influxdb-root-pass
-                key: password
+                key: username
           - name: INFLUXDB_ROOT_PASSWORD
             valueFrom:
               secretKeyRef:
@@ -91,7 +91,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: ft-influxdb-ft-nginx-pass
-                key: password
+                key: username
           - name: INFLUXDB_FT_NGINX_PASSWORD
             valueFrom:
               secretKeyRef:
@@ -106,7 +106,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: ft-influxdb-ft-phpmyadmin-pass
-                key: password
+                key: username
           - name: INFLUXDB_FT_PHPMYADMIN_PASSWORD
             valueFrom:
               secretKeyRef:
@@ -121,7 +121,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: ft-influxdb-ft-wordpress-pass
-                key: password
+                key: username
           - name: INFLUXDB_FT_WORDPRESS_PASSWORD
             valueFrom:
               secretKeyRef:
@@ -136,7 +136,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: ft-influxdb-ft-mysql-pass
-                key: password
+                key: username
           - name: INFLUXDB_FT_MYSQL_PASSWORD
             valueFrom:
               secretKeyRef:
@@ -151,7 +151,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: ft-influxdb-ft-ftps-pass
-                key: password
+                key: username
           - name: INFLUXDB_FT_FTPS_PASSWORD
             valueFrom:
               secretKeyRef:
@@ -166,7 +166,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: ft-influxdb-ft-grafana-pass
-                key: password
+                key: username
           - name: INFLUXDB_FT_GRAFANA_PASSWORD
             valueFrom:
               secretKeyRef:
@@ -181,7 +181,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: ft-influxdb-ft-influxdb-pass
-                key: password
+                key: username
           - name: INFLUXDB_FT_INFLUXDB_PASSWORD
             valueFrom:
               secretKeyRef:
