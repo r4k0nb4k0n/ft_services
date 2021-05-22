@@ -6,7 +6,7 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/05 17:45:21 by hyechoi           #+#    #+#              #
-#    Updated: 2021/05/20 13:31:19 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/05/22 23:56:42 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,9 @@ MAINTAINER hyechoi@student.42seoul.kr
 # Define ARG and ENV in need.
 ARG minikube_ip
 ENV MINIKUBE_IP=${minikube_ip}
+
+RUN apk add telegraf --repository http://alpine.42.fr/edge/community/
+COPY telegraf.conf /etc/telegraf.conf
 
 WORKDIR /app
 RUN apk add nginx

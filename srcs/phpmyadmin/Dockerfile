@@ -6,7 +6,7 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/05 17:45:21 by hyechoi           #+#    #+#              #
-#    Updated: 2021/05/20 13:33:13 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/05/22 23:53:09 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,9 @@ FROM alpine:3.12
 
 # Specify the author.
 MAINTAINER hyechoi@student.42seoul.kr
+
+RUN apk add telegraf --repository http://alpine.42.fr/edge/community/
+COPY telegraf.conf /etc/telegraf.conf
 
 WORKDIR /app
 COPY init.sh init.sh

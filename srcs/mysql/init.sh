@@ -1,5 +1,7 @@
 #!/bin/sh
 
+telegraf --config /etc/telegraf.conf 1>/dev/null 2>&1 &
+
 if [ ! -d "/run/mysqld" ]; then
 	mkdir -p /run/mysqld
 fi

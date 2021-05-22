@@ -1,5 +1,7 @@
 #!/bin/sh
 
+telegraf --config /etc/telegraf.conf 1>/dev/null 2>&1 &
+
 ls /var/lib/influxdb/flag &>/dev/null
 if [ $? -eq 1 ]
 then

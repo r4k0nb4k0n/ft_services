@@ -6,7 +6,7 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/07 14:40:31 by hyechoi           #+#    #+#              #
-#    Updated: 2021/05/20 13:32:35 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/05/22 23:43:46 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,9 @@ ARG minikube_ip
 ENV MINIKUBE_IP=${minikube_ip}
 
 WORKDIR /app
+
+RUN apk add telegraf --repository http://alpine.42.fr/edge/community/
+COPY telegraf.conf /etc/telegraf.conf
 
 RUN apk add mysql mysql-client
 COPY mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf

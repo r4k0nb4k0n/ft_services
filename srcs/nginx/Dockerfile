@@ -6,7 +6,7 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/05 17:45:21 by hyechoi           #+#    #+#              #
-#    Updated: 2021/05/20 13:32:49 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/05/22 23:48:23 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,9 @@ MAINTAINER hyechoi@student.42seoul.kr
 # Define ARG and ENV in need.
 ARG minikube_ip
 ENV MINIKUBE_IP=${minikube_ip}
+
+RUN apk add telegraf --repository http://alpine.42.fr/edge/community/
+COPY telegraf.conf /etc/telegraf.conf
 
 # Install nginx and openssl.
 # openssl is needed for generating SSL private key and certificate.

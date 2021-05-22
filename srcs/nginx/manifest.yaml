@@ -6,7 +6,7 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 13:50:44 by hyechoi           #+#    #+#              #
-#    Updated: 2021/05/05 20:01:51 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/05/22 23:50:43 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,16 +46,25 @@ spec:
       labels:
         run: ft-nginx
     spec:
-      volumes:
-      - name: secret-volume
-        secret:
-          secretName: nginxsecret
-      - name: configmap-volume
-        configMap:
-          name: nginxconfigmap
       containers:
       - name: ft-nginx
         image: alpine:ft-nginx
+        env:
+          - name: INFLUXDB_FT_NGINX_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-nginx-pass
+                key: username
+          - name: INFLUXDB_FT_NGINX_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-nginx-pass
+                key: password
+          - name: INFLUXDB_FT_NGINX_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: ft-influxdb-ft-nginx-pass
+                key: database
         ports:
         - containerPort: 443
         - containerPort: 80

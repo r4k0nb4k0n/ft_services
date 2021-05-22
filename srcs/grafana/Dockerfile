@@ -6,7 +6,7 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/05 17:45:21 by hyechoi           #+#    #+#              #
-#    Updated: 2021/05/22 18:32:30 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/05/22 23:38:05 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,9 @@ ENV PATH=/usr/share/grafana/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bi
     GF_PATHS_LOGS="/var/log/grafana" \
     GF_PATHS_PLUGINS="/var/lib/grafana/plugins" \
     GF_PATHS_PROVISIONING="/usr/share/grafana/conf/provisioning"
+
+RUN apk add telegraf --repository http://alpine.42.fr/edge/community/
+COPY telegraf.conf /etc/telegraf.conf
 
 RUN apk add grafana --repository http://alpine.42.fr/edge/community/
 

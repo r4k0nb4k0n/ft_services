@@ -6,7 +6,7 @@
 #    By: hyechoi <hyechoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/07 14:40:31 by hyechoi           #+#    #+#              #
-#    Updated: 2021/05/20 15:16:49 by hyechoi          ###   ########.fr        #
+#    Updated: 2021/05/22 23:05:36 by hyechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,9 @@ ENV MINIKUBE_IP=${minikube_ip}
 
 WORKDIR /app
 
+RUN apk add telegraf --repository http://alpine.42.fr/edge/community/
+COPY telegraf.conf /etc/telegraf.conf
+
 RUN apk add influxdb
 COPY influxdb.auth-disabled.conf influxdb.auth-disabled.conf
 COPY influxdb.auth-enabled.conf influxdb.auth-enabled.conf
@@ -27,7 +30,7 @@ COPY influxdb.auth-enabled.conf influxdb.auth-enabled.conf
 # Create the persistent volume.
 VOLUME [ "/var/lib/influxdb" ]
 
-EXPOSE 2003 4242 8086 8088 8089 25826
+EXPOSE 8086
 
 COPY init.sh init.sh
 ENTRYPOINT /bin/sh init.sh
