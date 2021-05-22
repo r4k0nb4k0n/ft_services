@@ -90,6 +90,8 @@ eval $(minikube docker-env)
 echo "\n$(tput setaf 7; tput setab 4; tput bold)___Build container images in need.___$(tput sgr 0)"
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-influxdb.___$(tput sgr 0)"
 docker build ./srcs/influxdb/ -t alpine:ft-influxdb --build-arg minikube_ip=$MINIKUBE_IP
+echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-grafana.___$(tput sgr 0)"
+docker build ./srcs/grafana/ -t alpine:ft-grafana --build-arg minikube_ip=$MINIKUBE_IP
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-nginx.___$(tput sgr 0)"
 docker build ./srcs/nginx/ -t alpine:ft-nginx --build-arg minikube_ip=$MINIKUBE_IP
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-mysql.___$(tput sgr 0)"
@@ -106,6 +108,7 @@ docker build ./srcs/ftps/ -t alpine:ft-ftps --build-arg minikube_ip=$MINIKUBE_IP
 echo "\n$(tput setaf 7; tput setab 4; tput bold)___Apply container images to kube.___$(tput sgr 0)"
 kubectl apply -f ./srcs/secrets.yaml
 kubectl apply -f ./srcs/influxdb/manifest.yaml
+kubectl apply -f ./srcs/grafana/manifest.yaml
 kubectl apply -f ./srcs/mysql/manifest.yaml
 kubectl apply -f ./srcs/nginx/manifest.yaml
 kubectl apply -f ./srcs/phpmyadmin/manifest.yaml
