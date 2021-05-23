@@ -64,7 +64,7 @@ export MINIKUBE_HOME=~/goinfre
 echo "\n$(tput setaf 7; tput setab 2; tput bold)___Set minikube config memory.___$(tput sgr 0)"
 minikube config set memory 4096
 echo "\n$(tput setaf 7; tput setab 2; tput bold)___Set minikube config disk-size.___$(tput sgr 0)"
-minikube config set disk-size 6120
+minikube config set disk-size 5120
 minikube start --wait=false --vm-driver=virtualbox
 if [[ "$?" != "0" ]]; then
 	echo "$(tput setaf 7; tput setab 1; tput bold)Can't 'minikube start'.$(tput sgr 0)\n"

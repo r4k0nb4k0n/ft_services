@@ -1,0 +1,59 @@
+apiVersion: 1
+
+providers:
+  - name: ft-ftps
+    folder: 'ft-ftps'
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    allowUiUpdates: false
+    options:
+      path: /usr/share/grafana/conf/provisioning/dashboards/ft-ftps
+  - name: ft-grafana
+    folder: 'ft-grafana'
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    allowUiUpdates: false
+    options:
+      path: /usr/share/grafana/conf/provisioning/dashboards/ft-grafana
+  - name: ft-influxdb
+    folder: 'ft-influxdb'
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    allowUiUpdates: false
+    options:
+      path: /usr/share/grafana/conf/provisioning/dashboards/influxdb
+  - name: ft-mysql
+    folder: 'ft-mysql'
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    allowUiUpdates: false
+    options:
+      path: /usr/share/grafana/conf/provisioning/dashboards/ft-mysql
+  - name: ft-nginx
+    folder: 'ft-nginx'
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    allowUiUpdates: false
+    options:
+      path: /usr/share/grafana/conf/provisioning/dashboards/ft-nginx
+  - name: ft-phpmyadmin
+    folder: 'ft-phpmyadmin'
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    allowUiUpdates: false
+    options:
+      path: /usr/share/grafana/conf/provisioning/dashboards/ft-phpmyadmin
+  - name: ft-wordpress
+    folder: 'ft-wordpress'
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    allowUiUpdates: false
+    options:
+      path: /usr/share/grafana/conf/provisioning/dashboards/ft-wordpress
