@@ -87,21 +87,24 @@ eval $(minikube docker-env)
 
 # Build container images in need.
 
+ALPINE_APK_MIRROR_REPO="http://alpine.cs.nctu.edu.tw/"
+echo "\n$(tput setaf 7; tput setab 4; tput bold)___Set alpine apk mirror repo.___$(tput sgr 0)"
+echo "$ALPINE_APK_MIRROR_REPO"
 echo "\n$(tput setaf 7; tput setab 4; tput bold)___Build container images in need.___$(tput sgr 0)"
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-influxdb.___$(tput sgr 0)"
-docker build ./srcs/influxdb/ -t alpine:ft-influxdb --build-arg minikube_ip=$MINIKUBE_IP
+docker build ./srcs/influxdb/ -t alpine:ft-influxdb --build-arg minikube_ip=$MINIKUBE_IP --build-arg alpine_apk_mirror_repo=$ALPINE_APK_MIRROR_REPO
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-grafana.___$(tput sgr 0)"
-docker build ./srcs/grafana/ -t alpine:ft-grafana --build-arg minikube_ip=$MINIKUBE_IP
+docker build ./srcs/grafana/ -t alpine:ft-grafana --build-arg minikube_ip=$MINIKUBE_IP --build-arg alpine_apk_mirror_repo=$ALPINE_APK_MIRROR_REPO
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-nginx.___$(tput sgr 0)"
-docker build ./srcs/nginx/ -t alpine:ft-nginx --build-arg minikube_ip=$MINIKUBE_IP
+docker build ./srcs/nginx/ -t alpine:ft-nginx --build-arg minikube_ip=$MINIKUBE_IP --build-arg alpine_apk_mirror_repo=$ALPINE_APK_MIRROR_REPO
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-mysql.___$(tput sgr 0)"
-docker build ./srcs/mysql/ -t alpine:ft-mysql
+docker build ./srcs/mysql/ -t alpine:ft-mysql --build-arg alpine_apk_mirror_repo=$ALPINE_APK_MIRROR_REPO
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-phpmyadmin.___$(tput sgr 0)"
-docker build ./srcs/phpmyadmin/ -t alpine:ft-phpmyadmin
+docker build ./srcs/phpmyadmin/ -t alpine:ft-phpmyadmin --build-arg alpine_apk_mirror_repo=$ALPINE_APK_MIRROR_REPO
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-wordpress.___$(tput sgr 0)"
-docker build ./srcs/wordpress/ -t alpine:ft-wordpress --build-arg minikube_ip=$MINIKUBE_IP
+docker build ./srcs/wordpress/ -t alpine:ft-wordpress --build-arg minikube_ip=$MINIKUBE_IP --build-arg alpine_apk_mirror_repo=$ALPINE_APK_MIRROR_REPO
 echo "$(tput setaf 7; tput setab 2; tput bold)___Build ft-ftps.___$(tput sgr 0)"
-docker build ./srcs/ftps/ -t alpine:ft-ftps --build-arg minikube_ip=$MINIKUBE_IP
+docker build ./srcs/ftps/ -t alpine:ft-ftps --build-arg minikube_ip=$MINIKUBE_IP --build-arg alpine_apk_mirror_repo=$ALPINE_APK_MIRROR_REPO
 
 # Apply container images to kube.
  
