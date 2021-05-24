@@ -8489,10 +8489,10 @@
       {
         "allFormat": "glob",
         "current": {
-          "text": "InfluxDB telegraf",
-          "value": "InfluxDB telegraf"
+          "text": "ft-wordpress",
+          "value": "ft-wordpress"
         },
-        "datasource": "InfluxDB telegraf",
+        "datasource": "ft-wordpress",
         "hide": 0,
         "includeAll": false,
         "label": "",

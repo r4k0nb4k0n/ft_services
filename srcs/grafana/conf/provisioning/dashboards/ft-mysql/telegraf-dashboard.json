@@ -8489,10 +8489,10 @@
       {
         "allFormat": "glob",
         "current": {
-          "text": "InfluxDB telegraf",
-          "value": "InfluxDB telegraf"
+          "text": "ft-mysql",
+          "value": "ft-mysql"
         },
-        "datasource": "InfluxDB telegraf",
+        "datasource": "ft-mysql",
         "hide": 0,
         "includeAll": false,
         "label": "",
