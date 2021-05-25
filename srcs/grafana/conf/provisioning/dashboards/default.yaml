@@ -24,7 +24,7 @@ providers:
     updateIntervalSeconds: 10
     allowUiUpdates: false
     options:
-      path: /usr/share/grafana/conf/provisioning/dashboards/influxdb
+      path: /usr/share/grafana/conf/provisioning/dashboards/ft-influxdb
   - name: ft-mysql
     folder: 'ft-mysql'
     type: file
