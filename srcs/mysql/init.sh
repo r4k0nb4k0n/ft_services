@@ -32,4 +32,3 @@ EOF
 	mysql --user=root -p$MYSQL_ROOT_PASSWORD < /app/pma_create_tables.sql
 fi
 
-tail -f /dev/null

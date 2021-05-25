@@ -46,4 +46,3 @@ then
 fi
 
 influxd run -pidfile /app/influxd.pidfile -config /app/influxdb.auth-enabled.conf  & sleep 3
-tail -f /dev/null
