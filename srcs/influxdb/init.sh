@@ -45,4 +45,4 @@ then
 	kill -9 `cat /app/influxd.pidfile`
 fi
 
-influxd run -pidfile /app/influxd.pidfile -config /app/influxdb.auth-enabled.conf  & sleep 3
+influxd run -pidfile /app/influxd.pidfile -config /app/influxdb.auth-enabled.conf 
